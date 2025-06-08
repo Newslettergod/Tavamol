@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Restaurant Table Availability</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 40px;
+    }
+    th, td {
+      border: 1px solid #888;
+      text-align: center;
+      padding: 8px;
+    }
+    th {
+      background-color: #333;
+      color: white;
+    }
+    .booked {
+      background-color: #f44336;
+      color: white;
+    }
+    .available {
+      background-color: #4CAF50;
+      color: white;
+    }
+    caption {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<table>
+  <caption>09/06/2025 - All Tables Fully Booked</caption>
+  <thead>
+    <tr>
+      <th>Time</th>
+      <th>Table 1</th>
+      <th>Table 2</th>
+      <th>Table 3</th>
+      <th>Table 4</th>
+      <th>Table 5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Hours from 12:00 PM to 10:00 PM -->
+    <!-- All booked -->
+    ${[...Array(11)].map((_, i) => {
+      const hour = i + 12;
+      return `
+        <tr>
+          <td>${hour}:00</td>
+          <td class="booked">Booked</td>
+          <td class="booked">Booked</td>
+          <td class="booked">Booked</td>
+          <td class="booked">Booked</td>
+          <td class="booked">Booked</td>
+        </tr>
+      `;
+    }).join('')}
+  </tbody>
+</table>
+
+<table>
+  <caption>10/06/2025 - One Table Available at 1:00 PM</caption>
+  <thead>
+    <tr>
+      <th>Time</th>
+      <th>Table 1</th>
+      <th>Table 2</th>
+      <th>Table 3</th>
+      <th>Table 4</th>
+      <th>Table 5</th>
+    </tr>
+  </thead>
+  <tbody>
+    ${[...Array(11)].map((_, i) => {
+      const hour = i + 12;
+      const time = `${hour}:00`;
+      return `
+        <tr>
+          <td>${time}</td>
+          ${
+            time === "13:00" ?
+            `<td class="booked">Booked</td>
+             <td class="booked">Booked</td>
+             <td class="available">Available</td>
+             <td class="booked">Booked</td>
+             <td class="booked">Booked</td>` :
+            `<td class="booked">Booked</td>
+             <td class="booked">Booked</td>
+             <td class="booked">Booked</td>
+             <td class="booked">Booked</td>
+             <td class="booked">Booked</td>`
+          }
+        </tr>
+      `;
+    }).join('')}
+  </tbody>
+</table>
+
+</body>
+</html>
