@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TavaMol - Գրանիտե Կաթսանի Հավաքածու</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .product-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            background: white;
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .image-section {
+            position: relative;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .main-image:hover {
+            transform: scale(1.02);
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+        }
+
+        .gallery-item {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .gallery-item:hover {
+            border-color: #3b82f6;
+            transform: scale(1.05);
+        }
+
+        .gallery-item.active {
+            border-color: #3b82f6;
+            opacity: 0.8;
+        }
+
+        .product-info {
+            padding-left: 1rem;
+        }
+
+        .product-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1e293b;
+            line-height: 1.2;
+        }
+
+        .product-specs {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .spec-item {
+            display: flex;
+            margin-bottom: 0.75rem;
+            align-items: center;
+        }
+
+        .spec-label {
+            font-weight: 600;
+            color: #374151;
+            margin-right: 0.5rem;
+            min-width: 120px;
+        }
+
+        .spec-value {
+            color: #1f2937;
+            font-weight: 500;
+        }
+
+        .delivery-section {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            border: 1px solid #3b82f6;
+        }
+
+        .delivery-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1e40af;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .delivery-title::before {
+            content: "🚚";
+            margin-right: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .delivery-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            padding: 0.5rem;
+            background: rgba(255,255,255,0.6);
+            border-radius: 8px;
+        }
+
+        .delivery-location {
+            font-weight: 600;
+            color: #1e40af;
+        }
+
+        .delivery-price {
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+        }
+
+        .free-delivery {
+            background: #10b981;
+            color: white;
+        }
+
+        .paid-delivery {
+            background: #f59e0b;
+            color: white;
+            font-size: 1.1rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .contact-section {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .contact-title {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .phone-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .phone-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .phone-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(59, 130, 246, 0.4);
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        }
+
+        .phone-btn::before {
+            content: "📞";
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .product-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 1.5rem;
+            }
+
+            .product-info {
+                padding-left: 0;
+            }
+
+            .product-title {
+                font-size: 1.5rem;
+            }
+
+            .main-image {
+                height: 300px;
+            }
+
+            .image-gallery {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .gallery-item {
+                height: 70px;
+            }
+
+            .spec-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .spec-label {
+                min-width: auto;
+                margin-bottom: 0.25rem;
+            }
+
+            .delivery-item {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            .phone-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .phone-btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .product-container {
+                padding: 1rem;
+            }
+
+            .main-image {
+                height: 250px;
+            }
+
+            .image-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .delivery-title {
+                font-size: 1.1rem;
+            }
+
+            .contact-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Popup Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .popup-overlay.show {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { 
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .popup-content {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            animation: slideIn 0.4s ease;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .popup-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .popup-title {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .popup-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .phone-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .phone-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .phone-input:focus {
+            outline: none;
+            border-color: white;
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.02);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+            color: #dc2626;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
+            margin-bottom: 1rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(255, 255, 255, 0.4);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .popup-message {
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .success-message {
+            background: rgba(16, 185, 129, 0.3);
+            border: 1px solid rgba(16, 185, 129, 0.5);
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.3);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+        }
+
+        /* Mobile Order Button */
+        .mobile-order-btn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+            z-index: 999;
+            animation: bounce 2s infinite;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-order-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(220, 38, 38, 0.5);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40%, 43% {
+                transform: translateY(-10px);
+            }
+            70% {
+                transform: translateY(-5px);
+            }
+            90% {
+                transform: translateY(-2px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-order-btn {
+                display: block;
+            }
+
+            .popup-content {
+                padding: 2rem;
+                margin: 20px;
+            }
+
+            .popup-title {
+                font-size: 1.3rem;
+            }
+
+            .popup-subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>TavaMol</h1>
+        </header>
+
+        <div class="product-container">
+            <div class="image-section">
+                <img id="mainImage" src="https://raw.githubusercontent.com/Newslettergod/Newsimg/refs/heads/main/474008114_629747392914313_7527475952665074548_n.jpg" alt="Գրանիտե Կաթսանի Հավաքածու" class="main-image">
+                
+                <div class="image-gallery">
+                    <img src="https://raw.githubusercontent.com/Newslettergod/Newsimg/refs/heads/main/474008114_629747392914313_7527475952665074548_n.jpg" alt="Գլխավոր նկար" class="gallery-item active" onclick="changeImage(this)">
+                    <img src="https://raw.githubusercontent.com/Newslettergod/Newsimg/refs/heads/main/1494576852_1239649904182570_6397491200346827883_n%20(1).jpeg" alt="Նկար 2" class="gallery-item" onclick="changeImage(this)">
+                    <img src="https://raw.githubusercontent.com/Newslettergod/Newsimg/refs/heads/main/1494578781_1712381809361477_4831826517884614741_n.jpeg" alt="Նկար 3" class="gallery-item" onclick="changeImage(this)">
+                    <img src="https://raw.githubusercontent.com/Newslettergod/Newsimg/refs/heads/main/178931633_111023620391575_209657630258364416_n-Photoroom.jpeg" alt="Նկար 4" class="gallery-item" onclick="changeImage(this)">
+                    <img src="https://raw.githubusercontent.com/Newslettergod/Newsimg/refs/heads/main/adf.jpeg" alt="Նկար 5" class="gallery-item" onclick="changeImage(this)">
+                    <img src="https://raw.githubusercontent.com/Newslettergod/Newsimg/refs/heads/main/1495046787_1239697400887429_418066684952286886_n.jpeg" alt="Նկար 6" class="gallery-item" onclick="changeImage(this)">
+                    <img src="https://raw.githubusercontent.com/Newslettergod/Newsimg/refs/heads/main/180317698_111484670345470_1400023956831862784_n%20(1).jpeg" alt="Նկար 7" class="gallery-item" onclick="changeImage(this)">
+                    <img src="https://raw.githubusercontent.com/Newslettergod/Newsimg/refs/heads/main/1494575488_1219369199872799_6946532863192199101_n%20(1).jpeg" alt="Նկար 8" class="gallery-item" onclick="changeImage(this)">
+                </div>
+            </div>
+
+            <div class="product-info">
+                <h2 class="product-title">Գրանիտե Կաթսանի Հավաքածու</h2>
+                
+                <div class="product-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">Արտադրված է՝</span>
+                        <span class="spec-value">Իրան</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Գույներ՝</span>
+                        <span class="spec-value">Սև և Բորդո</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Նյութ՝</span>
+                        <span class="spec-value">Ալյումին և գրանիտ</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Հատկություն՝</span>
+                        <span class="spec-value">Չկպչող ծածկույթ</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Կափարիչ՝</span>
+                        <span class="spec-value">Ներառում է 3 կափարիչ (ամենամեծ կաթսայի կափարիչը կարող է օգտագործվել նաև թավայի համար)</span>
+                    </div>
+                </div>
+
+                <div class="delivery-section">
+                    <div class="delivery-title">Առաքում</div>
+                    <div class="delivery-item">
+                        <span class="delivery-location">Երևանում</span>
+                        <span class="delivery-price free-delivery">ԱՆՎՃԱՐ</span>
+                    </div>
+                    <div class="delivery-item">
+                        <span class="delivery-location">Մարզերում</span>
+                        <span class="delivery-price paid-delivery">2000 դրամ</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-section">
+            <h3 class="contact-title">Պատվիրելու համար զանգահարեք</h3>
+            <div class="phone-buttons">
+                <a href="tel:091282325" class="phone-btn">091 28 23 25</a>
+                <a href="tel:098424420" class="phone-btn">098 424 420</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Overlay -->
+    <div id="popupOverlay" class="popup-overlay">
+        <div class="popup-content">
+            <button class="popup-close" onclick="closePopup()">&times;</button>
+            <h3 class="popup-title">TavaMol</h3>
+            <p class="popup-subtitle">Խնդրում ենք մուտքագրել ձեր հեռախոսահամարը։</p>
+            <input type="tel" id="phoneInput" class="phone-input" placeholder="093 XXX XXX" maxlength="9">
+            <button class="submit-btn" onclick="submitPhone()">Հաստատել</button>
+            <div id="popupMessage" class="popup-message" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- Mobile Order Button -->
+    <button class="mobile-order-btn" onclick="showPopup()">
+        🛒 Պատվիրել
+    </button>
+
+    <script>
+        function changeImage(element) {
+            // Remove active class from all gallery items
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active class to clicked item
+            element.classList.add('active');
+            
+            // Change main image
+            document.getElementById('mainImage').src = element.src;
+        }
+
+        // Add smooth scroll behavior and loading animation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fade in animation for product container
+            const productContainer = document.querySelector('.product-container');
+            productContainer.style.opacity = '0';
+            productContainer.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                productContainer.style.transition = 'all 0.8s ease';
+                productContainer.style.opacity = '1';
+                productContainer.style.transform = 'translateY(0)';
+            }, 200);
+
+            // Add loading effect for images
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                img.addEventListener('load', function() {
+                    this.style.opacity = '1';
+                });
+            });
+
+            // Show popup after 8 seconds
+            setTimeout(() => {
+                showPopup();
+            }, 8000);
+        });
+
+        // Popup Functions
+        function showPopup() {
+            document.getElementById('popupOverlay').classList.add('show');
+            document.getElementById('phoneInput').focus();
+        }
+
+        function closePopup() {
+            document.getElementById('popupOverlay').classList.remove('show');
+            document.getElementById('popupMessage').style.display = 'none';
+            document.getElementById('phoneInput').value = '';
+        }
+
+        function submitPhone() {
+            const phoneInput = document.getElementById('phoneInput');
+            const messageDiv = document.getElementById('popupMessage');
+            const phoneNumber = phoneInput.value.trim();
+            
+            // Validate phone number: must start with 0 and be exactly 9 digits
+            const phoneRegex = /^0\d{8}$/;
+            
+            if (phoneRegex.test(phoneNumber)) {
+                // Create form data
+                const formData = new FormData();
+                formData.append('phone', phoneNumber);
+                formData.append('_subject', 'New Phone Number Submission from TavaMol');
+                formData.append('_template', 'table');
+                
+                // Send data to FormSubmit
+                fetch("https://formsubmit.co/ajax/hrayr.daghlian@homenetmen.org", {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Success
+                        messageDiv.textContent = 'Շնորհակալություն! Մենք Ձեզ շուտով կզանգահարենք';
+                        messageDiv.className = 'popup-message success-message';
+                        messageDiv.style.display = 'block';
+                        
+                        // Auto close after 3 seconds
+                        setTimeout(() => {
+                            closePopup();
+                        }, 3000);
+                    } else {
+                        throw new Error('Network response was not ok');
+                    }
+                })
+                .catch(error => {
+                    // Error
+                    messageDiv.textContent = 'Խնդրում ենք ստուգել մուտքագրված համարը';
+                    messageDiv.className = 'popup-message error-message';
+                    messageDiv.style.display = 'block';
+                    
+                    // Shake animation for input
+                    phoneInput.style.animation = 'shake 0.5s';
+                    setTimeout(() => {
+                        phoneInput.style.animation = '';
+                    }, 500);
+                });
+            } else {
+                // Error
+                messageDiv.textContent = 'Խնդրում ենք ստուգել մուտքագրված համարը';
+                messageDiv.className = 'popup-message error-message';
+                messageDiv.style.display = 'block';
+                
+                // Shake animation for input
+                phoneInput.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    phoneInput.style.animation = '';
+                }, 500);
+            }
+        }
+
+        // Add shake animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Close popup when clicking outside
+        document.getElementById('popupOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePopup();
+            }
+        });
+
+        // Handle Enter key in phone input
+        document.getElementById('phoneInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                submitPhone();
+            }
+        });
+
+        // Format phone number as user types
+        document.getElementById('phoneInput').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+            if (value.length > 9) value = value.substring(0, 9); // Limit to 9 digits
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>
