@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pizza Nini</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff8f0;
+      color: #333;
+    }
+
+    header {
+      background-color: #d62828;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+
+    nav {
+      margin-top: 10px;
+    }
+
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      background-color: #f4a261;
+      color: white;
+    }
+
+    .hero h2 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+    }
+
+    .hero button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #e76f51;
+      border: none;
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .menu {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .menu h3 {
+      font-size: 1.8em;
+      margin-bottom: 30px;
+    }
+
+    .pizza-list {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .pizza {
+      background-color: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
+      width: 250px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .pizza h4 {
+      margin: 0 0 10px 0;
+      color: #d62828;
+    }
+
+    footer {
+      background-color: #222;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🍕 Pizza Nini</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Menu</a>
+      <a href="#">About Us</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h2>Welcome to Pizza Nini!</h2>
+      <p>Delicious pizzas made with love and fresh ingredients.</p>
+      <button>Order Now</button>
+    </section>
+
+    <section class="menu">
+      <h3>Our Favorites</h3>
+      <div class="pizza-list">
+        <div class="pizza">
+          <h4>Margherita</h4>
+          <p>Classic delight with fresh mozzarella and basil.</p>
+        </div>
+        <div class="pizza">
+          <h4>Pepperoni</h4>
+          <p>Spicy pepperoni layered over melty cheese and rich tomato sauce.</p>
+        </div>
+        <div class="pizza">
+          <h4>Veggie Supreme</h4>
+          <p>Loaded with peppers, onions, olives, and mushrooms.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Pizza Nini. All rights reserved.</p>
+  </footer>
+
+  <!-- ElevenLabs Conversational AI -->
+  <elevenlabs-convai agent-id="agent_01jwwv7dypeqw9rhxjzvm5gc86"></elevenlabs-convai>
+  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+</body>
+</html>
